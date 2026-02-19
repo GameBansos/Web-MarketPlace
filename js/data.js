@@ -1,0 +1,21 @@
+// Marketplace Komponen Komputer - gambar = placeholder dengan nama barang (placehold.co)
+const PRODUCTS = [
+  { id: 1, name: 'Processor Intel Core i5', price: 2499000, category: 'CPU', image: '🖥️', stock: 25, rating: 4.8 },
+  { id: 2, name: 'Processor AMD Ryzen 5', price: 2199000, category: 'CPU', image: '⚡', stock: 30, rating: 4.7, discount: 5 },
+  { id: 3, name: 'VGA NVIDIA RTX 3060', price: 4999000, category: 'VGA', image: '🎮', stock: 15, rating: 4.9 },
+  { id: 4, name: 'VGA AMD Radeon RX 6600', price: 3799000, category: 'VGA', image: '🖥️', stock: 18, rating: 4.6, discount: 10 },
+  { id: 5, name: 'RAM DDR4 16GB', price: 549000, category: 'RAM', image: '📦', stock: 50, rating: 4.5 },
+  { id: 6, name: 'RAM DDR5 32GB', price: 1299000, category: 'RAM', image: '📦', stock: 22, rating: 4.7 },
+  { id: 7, name: 'Motherboard B550', price: 1899000, category: 'Motherboard', image: '🔲', stock: 20, rating: 4.6 },
+  { id: 8, name: 'SSD NVMe 500GB', price: 699000, category: 'Storage', image: '💾', stock: 45, rating: 4.8 },
+  { id: 9, name: 'SSD NVMe 1TB', price: 1299000, category: 'Storage', image: '💾', stock: 35, rating: 4.7, discount: 8 },
+  { id: 10, name: 'HDD 1TB', price: 549000, category: 'Storage', image: '💿', stock: 40, rating: 4.4 },
+  { id: 11, name: 'PSU 650W 80+ Bronze', price: 799000, category: 'Power Supply', image: '🔌', stock: 28, rating: 4.5 },
+  { id: 12, name: 'PSU 750W 80+ Gold', price: 1299000, category: 'Power Supply', image: '⚡', stock: 18, rating: 4.8 },
+  { id: 13, name: 'Casing PC ATX', price: 899000, category: 'Casing', image: '📦', stock: 25, rating: 4.5 },
+  { id: 14, name: 'Cooler CPU AIO', price: 899000, category: 'Cooling', image: '🌀', stock: 20, rating: 4.6 },
+  { id: 15, name: 'Monitor 24 inch', price: 1899000, category: 'Monitor', image: '🖥️', stock: 22, rating: 4.7 },
+  { id: 16, name: 'Keyboard Mechanical', price: 649000, category: 'Peripheral', image: '⌨️', stock: 35, rating: 4.6 },
+  { id: 17, name: 'Mouse Gaming', price: 349000, category: 'Peripheral', image: '🖱️', stock: 50, rating: 4.5 },
+  { id: 18, name: 'Webcam HD 1080p', price: 449000, category: 'Peripheral', image: '📷', stock: 30, rating: 4.4 },
+];

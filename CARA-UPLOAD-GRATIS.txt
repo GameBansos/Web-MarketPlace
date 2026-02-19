@@ -1,0 +1,22 @@
+========================================
+  UPLOAD GRATIS - PC PARTS
+========================================
+
+Semua gratis, tanpa kartu kredit.
+
+CARA TERCEPAT (Netlify):
+------------------------
+1. Buka: https://app.netlify.com
+2. Daftar gratis (pakai Google/GitHub/email)
+3. Klik "Add new site" → "Deploy manually"
+4. Tarik-dan-lepas folder "marketplace" ini ke kotak yang muncul
+5. Selesai! Anda dapat link seperti https://xxxxx.netlify.app
+
+Bagikan link itu ke siapa saja — mereka bisa buka dari HP atau laptop.
+
+Opsi lain (juga gratis):
+- Vercel.com
+- GitHub Pages (lewat GitHub.com)
+- Cloudflare Pages
+
+Detail lengkap ada di README.md

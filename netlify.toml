@@ -1,0 +1,9 @@
+# Netlify - publikasi situs agar bisa diakses banyak orang
+[build]
+  publish = "."
+
+# Hanya redirect ke index.html jika file tidak ada (404). Supaya css/style.css dan js/* tetap diload.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404

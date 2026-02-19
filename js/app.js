@@ -109,7 +109,10 @@
   // ----- Filter & sort products -----
   function getFilteredProducts() {
     let list = PRODUCTS.filter(p => {
-      const matchCategory = currentCategory === 'semua' || p.category === currentCategory;
+      let matchCategory;
+      if (currentCategory === 'semua') matchCategory = true;
+      else if (currentCategory === 'Komponen Komputer') matchCategory = p.category !== 'Market Game';
+      else matchCategory = p.category === currentCategory;
       const matchSearch = !searchQuery.trim() ||
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchQuery.toLowerCase());
@@ -402,6 +405,8 @@
   // ----- Routing -----
   function getRoute() {
     const hash = window.location.hash.slice(1) || 'beranda';
+    const kategoriMatch = hash.match(/^kategori\/(.+)$/);
+    if (kategoriMatch) return { view: 'beranda', category: decodeURIComponent(kategoriMatch[1]) };
     if (hash === 'beranda' || hash === 'kategori') return { view: 'beranda' };
     if (hash === 'live') return { view: 'live' };
     if (hash === 'keranjang') return { view: 'keranjang' };
@@ -425,6 +430,7 @@
   function handleRoute() {
     const route = getRoute();
     if (route.view === 'beranda') {
+      if (route.category) currentCategory = route.category;
       showView('beranda');
       renderBeranda();
     } else if (route.view === 'live') {

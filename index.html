@@ -3,165 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PC Parts - Toko Komponen Komputer</title>
-  <meta name="description" content="Toko komponen komputer online: CPU, VGA, RAM, SSD, PSU, Casing, Monitor & peripheral. Belanja aman, harga terbaik.">
+  <title>Marketplace - Beranda</title>
   <meta name="theme-color" content="#0a0a0f">
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="PC Parts - Komponen Komputer">
-  <meta property="og:description" content="Toko komponen komputer: CPU, VGA, RAM, SSD, PSU & aksesoris PC.">
-  <meta property="og:locale" content="id_ID">
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PC Parts - Komponen Komputer">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container header-inner">
-      <a href="#beranda" class="logo">
-        <span class="logo-icon">🖥️</span>
-        <span>PC Parts</span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Buka menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="nav" id="mainNav">
-        <a href="#beranda" class="nav-link">Beranda</a>
-        <a href="#kategori" class="nav-link">Kategori</a>
-        <a href="#keranjang" class="nav-link nav-cart">
-          Keranjang
-          <span class="cart-badge" id="cartBadge">0</span>
-        </a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Search bar - floating pill -->
-  <section class="search-section">
-    <div class="container">
-      <div class="search-wrapper">
-        <div class="search-box">
-          <span class="search-icon" aria-hidden="true">⌕</span>
-          <input type="search" id="searchInput" placeholder="Cari CPU, VGA, RAM..." aria-label="Cari komponen">
-          <button type="button" class="search-btn" id="searchBtn">Cari</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main content -->
+<body class="app-mobile">
   <main class="main">
-    <!-- Beranda - Daftar produk -->
+    <!-- Beranda -->
     <section id="view-beranda" class="view active">
-      <div class="hero">
-        <div class="hero-bg" aria-hidden="true">
-          <img src="https://placehold.co/1200x400/0f172a/60a5fa?text=PC+Parts+%E2%80%93+Komponen+Komputer" alt="" width="1200" height="400">
+      <div class="screen-inner">
+        <div class="search-bar">
+          <span class="search-icon">⌕</span>
+          <input type="search" id="searchInput" placeholder="Cari..." aria-label="Cari">
         </div>
-        <div class="container hero-inner">
-          <h2 class="hero-title">Komponen Komputer Lengkap</h2>
-          <p class="hero-text">CPU, VGA, RAM, SSD, PSU, dan aksesoris PC. Diskon hingga 10% untuk produk pilihan.</p>
-          <a href="#beranda" class="hero-cta">Lihat Produk</a>
-        </div>
-      </div>
-      <div class="container">
-        <header class="page-header">
-          <h1 class="page-title">Komponen Komputer</h1>
-          <p class="page-subtitle">CPU, VGA, RAM, Storage, PSU, Casing, Monitor & Peripheral</p>
-        </header>
-        <p class="section-label">Kategori</p>
-        <div class="category-pills" id="categoryPills"></div>
-        <div class="toolbar">
-          <p class="product-count" id="productCount">Menampilkan 0 produk</p>
-          <div class="sort-wrap">
-            <label for="sortSelect" class="sort-label">Urutkan</label>
-            <select id="sortSelect" class="sort-select" aria-label="Urutkan produk">
-              <option value="default">Default</option>
-              <option value="price_asc">Harga: Terendah</option>
-              <option value="price_desc">Harga: Tertinggi</option>
-              <option value="name">Nama A–Z</option>
-            </select>
+        <div class="saldo-card">
+          <div class="saldo-qris">
+            <span class="qris-icon">▣</span>
+            <span class="qris-label">QRIS</span>
+          </div>
+          <div class="saldo-info">
+            <span class="saldo-amount" id="saldoAmount">Rp 1.500.000</span>
+            <span class="saldo-label">Saldo</span>
           </div>
         </div>
-        <div class="product-grid" id="productGrid"></div>
-        <p class="empty-state" id="emptyProducts" style="display: none;">Tidak ada produk yang cocok.</p>
+        <div class="shortcuts">
+          <a href="#" class="shortcut-item">
+            <span class="shortcut-icon">📱</span>
+            <span class="shortcut-label">Pulsa</span>
+          </a>
+          <a href="#" class="shortcut-item">
+            <span class="shortcut-icon">🎮</span>
+            <span class="shortcut-label">Market Game</span>
+          </a>
+          <a href="#" class="shortcut-item">
+            <span class="shortcut-icon">❤️</span>
+            <span class="shortcut-label">Pilih Lokal</span>
+          </a>
+        </div>
+        <div class="product-horizontal-wrap">
+          <div class="product-horizontal" id="productHorizontal"></div>
+        </div>
       </div>
     </section>
 
-    <!-- Detail produk -->
-    <section id="view-detail" class="view">
-      <div class="container">
-        <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
-        <div class="product-detail" id="productDetail"></div>
+    <!-- Live dan Video -->
+    <section id="view-live" class="view">
+      <div class="screen-inner">
+        <header class="live-header">
+          <button type="button" class="live-header-btn" aria-label="Profil">👤</button>
+          <h1 class="live-title">Video Live</h1>
+          <button type="button" class="live-header-btn" aria-label="Cari">⌕</button>
+        </header>
+        <div class="live-tag-wrap">
+          <span class="live-tag">Rog</span>
+        </div>
+        <div class="live-video-area">
+          <div class="live-video-placeholder">
+            <span class="live-placeholder-emoji">📺</span>
+            <p>Live / Video</p>
+          </div>
+        </div>
+        <div class="live-actions">
+          <input type="text" class="live-chat-input" placeholder="Ketik komentar..." aria-label="Komentar">
+          <button type="button" class="live-action-btn" aria-label="Suka">❤️</button>
+          <div class="live-reactions">
+            <button type="button" class="reaction-btn">👍</button>
+            <button type="button" class="reaction-btn">😂</button>
+            <button type="button" class="reaction-btn">🔥</button>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Keranjang -->
     <section id="view-keranjang" class="view">
-      <div class="container">
-        <header class="page-header">
-          <h1 class="page-title">Keranjang Belanja</h1>
-          <p class="page-subtitle">Review pesanan sebelum checkout</p>
-        </header>
+      <div class="screen-inner">
+        <div class="cart-section">
+          <label class="cart-section-check">
+            <input type="checkbox" id="cartSelectGroup">
+            <span>Baju keren</span>
+          </label>
+        </div>
         <div class="cart-content" id="cartContent"></div>
         <div class="cart-empty" id="cartEmpty">
           <p>Keranjang masih kosong.</p>
           <a href="#beranda" class="btn btn-primary">Mulai Belanja</a>
         </div>
+        <button type="button" class="btn btn-show-all" id="btnTampilkanSemua">Tampilkan Semua</button>
+        <div class="cart-recommendations">
+          <div class="rec-card"></div>
+          <div class="rec-card"></div>
+          <div class="rec-card"></div>
+        </div>
+        <a href="#" class="cart-voucher">
+          <span>Voucher</span>
+          <span class="cart-voucher-arrow">›</span>
+        </a>
+        <div class="cart-total-bar">
+          <label class="cart-total-check">
+            <input type="checkbox" id="cartSelectAll">
+            <span>Semua</span>
+          </label>
+          <span class="cart-total-price" id="cartTotalPrice">Rp 0</span>
+          <button type="button" class="cart-checkout-btn" id="cartCheckoutBtn" aria-label="Checkout">✓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notifikasi -->
+    <section id="view-notifikasi" class="view">
+      <div class="screen-inner">
+        <ul class="notif-list">
+          <li class="notif-item">
+            <span class="notif-icon">🏷️</span>
+            <span class="notif-label">Promo</span>
+            <span class="notif-arrow">›</span>
+          </li>
+          <li class="notif-item">
+            <span class="notif-icon">❤️</span>
+            <span class="notif-label">Live</span>
+            <span class="notif-arrow">›</span>
+          </li>
+          <li class="notif-item">
+            <span class="notif-icon">🏪</span>
+            <span class="notif-label">Info Market</span>
+            <span class="notif-arrow">›</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Profil (tab ke-5) -->
+    <section id="view-profil" class="view">
+      <div class="screen-inner">
+        <div class="profil-placeholder">
+          <span class="profil-avatar">👤</span>
+          <p>Profil</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail produk (overlay / full view) -->
+    <section id="view-detail" class="view">
+      <div class="screen-inner">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+        <div class="product-detail" id="productDetail"></div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="#beranda" class="footer-logo">
-          <span class="logo-icon">🖥️</span>
-          <span>PC Parts</span>
-        </a>
-        <p class="footer-tagline">Toko komponen komputer. CPU, VGA, RAM, Storage & aksesoris PC.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4 class="footer-heading">Layanan</h4>
-          <ul>
-            <li><a href="#beranda">Beranda</a></li>
-            <li><a href="#keranjang">Keranjang</a></li>
-            <li><a href="#">Cek Pesanan</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-heading">Bantuan</h4>
-          <ul>
-            <li><a href="#">Pusat Bantuan</a></li>
-            <li><a href="#">Cara Belanja</a></li>
-            <li><a href="#">Pengiriman</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-heading">Perusahaan</h4>
-          <ul>
-            <li><a href="#">Tentang Kami</a></li>
-            <li><a href="#">Kontak</a></li>
-            <li><a href="#">Kebijakan Privasi</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p>© 2025 PC Parts. Komponen Komputer.</p>
-      </div>
-    </div>
-  </footer>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Navigasi utama">
+    <a href="#beranda" class="bottom-nav-item" data-tab="beranda" aria-current="page">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Beranda</span>
+    </a>
+    <a href="#live" class="bottom-nav-item" data-tab="live">
+      <span class="bottom-nav-icon">📄</span>
+      <span class="bottom-nav-label">Live</span>
+    </a>
+    <a href="#keranjang" class="bottom-nav-item bottom-nav-cart" data-tab="keranjang">
+      <span class="bottom-nav-icon">🛒</span>
+      <span class="cart-badge" id="cartBadge">0</span>
+      <span class="bottom-nav-label">Keranjang</span>
+    </a>
+    <a href="#notifikasi" class="bottom-nav-item" data-tab="notifikasi">
+      <span class="bottom-nav-icon">🔔</span>
+      <span class="bottom-nav-label">Notifikasi</span>
+    </a>
+    <a href="#profil" class="bottom-nav-item" data-tab="profil">
+      <span class="bottom-nav-icon">👤</span>
+      <span class="bottom-nav-label">Profil</span>
+    </a>
+  </nav>
 
   <script src="./js/data.js"></script>
   <script src="./js/app.js"></script>

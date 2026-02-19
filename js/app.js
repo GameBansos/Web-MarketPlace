@@ -23,15 +23,19 @@
   const searchBtn = document.getElementById('searchBtn');
   const categoryPills = document.getElementById('categoryPills');
   const productGrid = document.getElementById('productGrid');
+  const productHorizontal = document.getElementById('productHorizontal');
   const emptyProducts = document.getElementById('emptyProducts');
   const productDetail = document.getElementById('productDetail');
   const cartContent = document.getElementById('cartContent');
   const cartEmpty = document.getElementById('cartEmpty');
+  const cartTotalPrice = document.getElementById('cartTotalPrice');
   const productCount = document.getElementById('productCount');
   const sortSelect = document.getElementById('sortSelect');
   const breadcrumb = document.getElementById('breadcrumb');
 
-  if (!productGrid || !categoryPills) {
+  const isMobileApp = !!productHorizontal;
+
+  if (!isMobileApp && (!productGrid || !categoryPills)) {
     console.error('Elemen utama tidak ditemukan. Pastikan index.html lengkap.');
     return;
   }
@@ -197,7 +201,35 @@
   }
 
   // ----- Render views -----
+  function renderHorizontalCards() {
+    if (!productHorizontal) return;
+    const products = getFilteredProducts().slice(0, 10);
+    productHorizontal.innerHTML = products.map(p => {
+      const price = getProductPrice(p);
+      const imgUrl = getProductImageUrl(p, 320);
+      return `
+        <a href="#produk/${p.id}" class="h-card">
+          <div class="h-card-image">
+            <img src="${imgUrl}" alt="${escapeHtml(p.name)}" loading="lazy" width="160" height="160">
+          </div>
+          <div class="h-card-body">
+            <p class="h-card-name">${escapeHtml(p.name)}</p>
+            <p class="h-card-price">${formatRupiah(price)}</p>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
   function renderBeranda() {
+    if (isMobileApp) {
+      renderHorizontalCards();
+      if (searchInput) {
+        searchInput.value = searchQuery;
+      }
+      return;
+    }
+
     const categories = getCategories();
     categoryPills.innerHTML = categories.map(cat => {
       const label = cat === 'semua' ? 'Semua' : cat;
@@ -208,7 +240,7 @@
     const products = getFilteredProducts();
     productGrid.innerHTML = '';
     products.forEach(p => productGrid.appendChild(renderProductCard(p)));
-    emptyProducts.style.display = products.length ? 'none' : 'block';
+    if (emptyProducts) emptyProducts.style.display = products.length ? 'none' : 'block';
 
     if (productCount) {
       productCount.textContent = products.length === 0
@@ -278,10 +310,11 @@
     if (cart.length === 0) {
       cartContent.classList.remove('has-items');
       cartContent.innerHTML = '';
-      cartEmpty.classList.remove('hidden');
+      if (cartEmpty) cartEmpty.classList.remove('hidden');
+      if (cartTotalPrice) cartTotalPrice.textContent = 'Rp 0';
       return;
     }
-    cartEmpty.classList.add('hidden');
+    if (cartEmpty) cartEmpty.classList.add('hidden');
     cartContent.classList.add('has-items');
 
     let total = 0;
@@ -301,7 +334,10 @@
         : `<span class="price">${formatRupiah(product.price)}</span>`;
       const li = document.createElement('li');
       li.className = 'cart-item' + (product.discount ? ' cart-item-discounted' : '');
+      const checkHtml = isMobileApp ? `<label class="cart-item-check"><input type="checkbox" data-cart-check="${product.id}"></label>` : '';
+      const removeBtn = isMobileApp ? '' : `<button type="button" class="cart-item-remove" data-cart-remove="${product.id}" aria-label="Hapus">×</button>`;
       li.innerHTML = `
+        ${checkHtml}
         <div class="cart-item-image">
           <img src="${cartImgUrl}" alt="${escapeHtml(product.name)}" width="64" height="64">
           ${product.discount ? `<span class="cart-item-badge">−${product.discount}%</span>` : ''}
@@ -315,24 +351,28 @@
           <span>${item.qty}</span>
           <button type="button" data-cart-plus="${product.id}">+</button>
         </div>
-        <button type="button" class="cart-item-remove" data-cart-remove="${product.id}" aria-label="Hapus">×</button>
+        ${removeBtn}
       `;
       list.appendChild(li);
     });
 
     cartContent.innerHTML = '';
     cartContent.appendChild(list);
-    const summary = document.createElement('div');
-    summary.className = 'cart-summary';
-    summary.innerHTML = `
-      ${totalSavings > 0 ? `<div class="cart-savings">Anda hemat ${formatRupiah(totalSavings)}!</div>` : ''}
-      <div class="cart-total">
-        <span>Total yang dibayar</span>
-        <span class="price">${formatRupiah(total)}</span>
-      </div>
-      <button type="button" class="btn btn-primary" disabled>Checkout (demo)</button>
-    `;
-    cartContent.appendChild(summary);
+    if (cartTotalPrice) cartTotalPrice.textContent = formatRupiah(total);
+
+    if (!isMobileApp) {
+      const summary = document.createElement('div');
+      summary.className = 'cart-summary';
+      summary.innerHTML = `
+        ${totalSavings > 0 ? `<div class="cart-savings">Anda hemat ${formatRupiah(totalSavings)}!</div>` : ''}
+        <div class="cart-total">
+          <span>Total yang dibayar</span>
+          <span class="price">${formatRupiah(total)}</span>
+        </div>
+        <button type="button" class="btn btn-primary" disabled>Checkout (demo)</button>
+      `;
+      cartContent.appendChild(summary);
+    }
 
     cartContent.querySelectorAll('[data-cart-minus]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -363,7 +403,10 @@
   function getRoute() {
     const hash = window.location.hash.slice(1) || 'beranda';
     if (hash === 'beranda' || hash === 'kategori') return { view: 'beranda' };
+    if (hash === 'live') return { view: 'live' };
     if (hash === 'keranjang') return { view: 'keranjang' };
+    if (hash === 'notifikasi') return { view: 'notifikasi' };
+    if (hash === 'profil') return { view: 'profil' };
     const m = hash.match(/^produk\/(\d+)$/);
     if (m) return { view: 'detail', id: m[1] };
     return { view: 'beranda' };
@@ -373,6 +416,10 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     const el = document.getElementById('view-' + viewId);
     if (el) el.classList.add('active');
+    document.querySelectorAll('.bottom-nav-item').forEach(item => {
+      const tab = item.getAttribute('data-tab');
+      item.setAttribute('aria-current', tab === viewId ? 'page' : null);
+    });
   }
 
   function handleRoute() {
@@ -380,12 +427,18 @@
     if (route.view === 'beranda') {
       showView('beranda');
       renderBeranda();
-    } else if (route.view === 'detail') {
-      showView('detail');
-      renderDetail(route.id);
+    } else if (route.view === 'live') {
+      showView('live');
     } else if (route.view === 'keranjang') {
       showView('keranjang');
       renderKeranjang();
+    } else if (route.view === 'notifikasi') {
+      showView('notifikasi');
+    } else if (route.view === 'profil') {
+      showView('profil');
+    } else if (route.view === 'detail') {
+      showView('detail');
+      renderDetail(route.id);
     }
   }
 
@@ -400,14 +453,20 @@
     });
   }
 
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener('click', () => {
-      searchQuery = searchInput.value;
-      if (getRoute().view === 'beranda') renderBeranda();
-      else window.location.hash = 'beranda';
-    });
+  if (searchInput) {
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        searchQuery = searchInput.value;
+        if (getRoute().view === 'beranda') renderBeranda();
+        else window.location.hash = 'beranda';
+      });
+    }
     searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') searchBtn.click();
+      if (e.key === 'Enter') {
+        searchQuery = searchInput.value;
+        if (getRoute().view === 'beranda') renderBeranda();
+        else window.location.hash = 'beranda';
+      }
     });
   }
 
